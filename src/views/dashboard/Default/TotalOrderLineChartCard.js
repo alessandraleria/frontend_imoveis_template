@@ -81,20 +81,7 @@ const TotalOrderLineChartCard = ({ isLoading }) => {
                         <Grid container direction="column">
                             <Grid item>
                                 <Grid container justifyContent="space-between">
-                                    <Grid item>
-                                        <Avatar
-                                            variant="rounded"
-                                            sx={{
-                                                ...theme.typography.commonAvatar,
-                                                ...theme.typography.largeAvatar,
-                                                backgroundColor: theme.palette.primary[800],
-                                                color: '#fff',
-                                                mt: 1
-                                            }}
-                                        >
-                                            <LocalMallOutlinedIcon fontSize="inherit" />
-                                        </Avatar>
-                                    </Grid>
+                                    <Grid item lg={6} md={6} sm={6} />
                                     <Grid item>
                                         <Button
                                             disableElevation
@@ -103,7 +90,7 @@ const TotalOrderLineChartCard = ({ isLoading }) => {
                                             sx={{ color: 'inherit' }}
                                             onClick={(e) => handleChangeTime(e, true)}
                                         >
-                                            Month
+                                            Mês
                                         </Button>
                                         <Button
                                             disableElevation
@@ -112,7 +99,7 @@ const TotalOrderLineChartCard = ({ isLoading }) => {
                                             sx={{ color: 'inherit' }}
                                             onClick={(e) => handleChangeTime(e, false)}
                                         >
-                                            Year
+                                            Ano
                                         </Button>
                                     </Grid>
                                 </Grid>
@@ -124,25 +111,13 @@ const TotalOrderLineChartCard = ({ isLoading }) => {
                                             <Grid item>
                                                 {timeValue ? (
                                                     <Typography sx={{ fontSize: '2.125rem', fontWeight: 500, mr: 1, mt: 1.75, mb: 0.75 }}>
-                                                        $108
+                                                        R$1681
                                                     </Typography>
                                                 ) : (
                                                     <Typography sx={{ fontSize: '2.125rem', fontWeight: 500, mr: 1, mt: 1.75, mb: 0.75 }}>
-                                                        $961
+                                                        R$11194
                                                     </Typography>
                                                 )}
-                                            </Grid>
-                                            <Grid item>
-                                                <Avatar
-                                                    sx={{
-                                                        ...theme.typography.smallAvatar,
-                                                        cursor: 'pointer',
-                                                        backgroundColor: theme.palette.primary[200],
-                                                        color: theme.palette.primary.dark
-                                                    }}
-                                                >
-                                                    <ArrowDownwardIcon fontSize="inherit" sx={{ transform: 'rotate3d(1, 1, 1, 45deg)' }} />
-                                                </Avatar>
                                             </Grid>
                                             <Grid item xs={12}>
                                                 <Typography
@@ -152,7 +127,7 @@ const TotalOrderLineChartCard = ({ isLoading }) => {
                                                         color: theme.palette.primary[200]
                                                     }}
                                                 >
-                                                    Total Order
+                                                    Lucro Temporada
                                                 </Typography>
                                             </Grid>
                                         </Grid>

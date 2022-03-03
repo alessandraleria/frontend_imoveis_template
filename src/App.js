@@ -20,7 +20,6 @@ const App = () => {
     return (
         <StyledEngineProvider injectFirst>
             <ThemeProvider theme={themes(customization)}>
-                <CssBaseline />
                 <NavigationScroll>
                     <Routes />
                 </NavigationScroll>

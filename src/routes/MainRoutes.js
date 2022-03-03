@@ -24,6 +24,10 @@ const MainRoutes = {
     element: <MainLayout />,
     children: [
         {
+            path: '/sample-page',
+            element: <SamplePage />
+        },
+        {
             path: '/',
             element: <DashboardDefault />
         },
@@ -50,10 +54,6 @@ const MainRoutes = {
         {
             path: '/icons/material-icons',
             element: <UtilsMaterialIcons />
-        },
-        {
-            path: '/sample-page',
-            element: <SamplePage />
         }
     ]
 };
