@@ -5,7 +5,8 @@ import EarningCard from '../dashboard/Default/EarningCard';
 import TotalCard from '../dashboard/Default/TotalOrderLineChartCard';
 import MainCard from 'ui-component/cards/MainCard';
 import { gridSpacing } from 'store/constant';
-import { Map, InfoWindow, Marker, GoogleApiWrapper } from 'google-maps-react';
+import { GoogleApiWrapper } from 'google-maps-react';
+// import { Map, InfoWindow, Marker, GoogleApiWrapper } from 'google-maps-react';
 
 // ==============================|| SAMPLE PAGE ||============================== //
 

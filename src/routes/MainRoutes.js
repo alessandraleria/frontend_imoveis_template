@@ -5,6 +5,9 @@ import MainLayout from 'layout/MainLayout';
 import Loadable from 'ui-component/Loadable';
 
 // dashboard routing
+const Dashboard = Loadable(lazy(() => import('views/pages/dashboard')));
+
+// dashboard routing
 const DashboardDefault = Loadable(lazy(() => import('views/dashboard/Default')));
 
 // utilities routing
@@ -26,6 +29,10 @@ const MainRoutes = {
         {
             path: '/sample-page',
             element: <SamplePage />
+        },
+        {
+            path: '/dashboard1',
+            element: <Dashboard />
         },
         {
             path: '/',
