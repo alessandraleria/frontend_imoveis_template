@@ -11,6 +11,7 @@ import AuthLogin from '../auth-forms/AuthLogin';
 import Logo from 'ui-component/Logo';
 import AuthFooter from 'ui-component/cards/AuthFooter';
 
+
 // assets
 
 // ================================|| AUTH3 - LOGIN ||================================ //
@@ -18,7 +19,7 @@ import AuthFooter from 'ui-component/cards/AuthFooter';
 const Login = () => {
     const theme = useTheme();
     const matchDownSM = useMediaQuery(theme.breakpoints.down('md'));
-
+      
     return (
         <AuthWrapper1>
             <Grid container direction="column" justifyContent="flex-end" sx={{ minHeight: '100vh' }}>

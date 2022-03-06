@@ -35,7 +35,7 @@ import { strengthColor, strengthIndicator } from 'utils/password-strength';
 // assets
 import Visibility from '@mui/icons-material/Visibility';
 import VisibilityOff from '@mui/icons-material/VisibilityOff';
-
+import GoogleLogin from "react-google-login";
 // ===========================|| FIREBASE - REGISTER ||=========================== //
 
 const FirebaseRegister = ({ ...others }) => {
@@ -71,28 +71,24 @@ const FirebaseRegister = ({ ...others }) => {
         changePassword('123456');
     }, []);
 
+    const handleLogin = async googleData => {
+        console.log(googleData);
+        const res = await api.post("/auth/google", {
+          token: googleData.tokenId
+        })
+        console.log(res)
+    }
+
     return (
         <>
             <Grid container direction="column" justifyContent="center" spacing={2}>
-                <Grid item xs={12}>
-                    <AnimateButton>
-                        <Button
-                            variant="outlined"
-                            fullWidth
-                            onClick={googleHandler}
-                            size="large"
-                            sx={{
-                                color: 'grey.700',
-                                backgroundColor: theme.palette.grey[50],
-                                borderColor: theme.palette.grey[100]
-                            }}
-                        >
-                            <Box sx={{ mr: { xs: 1, sm: 2, width: 20 } }}>
-                                <img src={Google} alt="google" width={16} height={16} style={{ marginRight: matchDownSM ? 8 : 16 }} />
-                            </Box>
-                            Sign up with Google
-                        </Button>
-                    </AnimateButton>
+                <Grid item xs={12} style={{justifyContent: 'center', alignItems: 'center', display: 'flex' }}>
+                    <GoogleLogin
+                        clientId={"787501218586-ugek5e30gsj68th2on26iacae4ufu9je.apps.googleusercontent.com"}
+                        buttonText="Log in with Google"
+                        onSuccess={handleLogin}
+                        onFailure={handleLogin}
+                    />
                 </Grid>
                 <Grid item xs={12}>
                     <Box sx={{ alignItems: 'center', display: 'flex' }}>
