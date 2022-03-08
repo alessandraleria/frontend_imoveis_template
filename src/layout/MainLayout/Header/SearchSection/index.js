@@ -3,7 +3,7 @@ import { useState } from 'react';
 
 // material-ui
 import { useTheme, styled } from '@mui/material/styles';
-import { Avatar, Box, ButtonBase, Card, Grid, InputAdornment, OutlinedInput, Popper } from '@mui/material';
+import { Avatar, Box, ButtonBase, Card, Grid, InputAdornment, OutlinedInput, Popper, TextField, MenuItem } from '@mui/material';
 
 // third-party
 import PopupState, { bindPopper, bindToggle } from 'material-ui-popup-state';
@@ -161,30 +161,35 @@ const SearchSection = () => {
                     )}
                 </PopupState>
             </Box>
-            <Box sx={{ display: { xs: 'none', md: 'block' } }}>
-                <OutlineInputStyle
-                    id="input-search-header"
-                    value={value}
-                    onChange={(e) => setValue(e.target.value)}
-                    placeholder="Search"
-                    startAdornment={
-                        <InputAdornment position="start">
-                            <IconSearch stroke={1.5} size="1rem" color={theme.palette.grey[500]} />
-                        </InputAdornment>
-                    }
-                    endAdornment={
-                        <InputAdornment position="end">
-                            <ButtonBase sx={{ borderRadius: '12px' }}>
-                                <HeaderAvatarStyle variant="rounded">
-                                    <IconAdjustmentsHorizontal stroke={1.5} size="1.3rem" />
-                                </HeaderAvatarStyle>
-                            </ButtonBase>
-                        </InputAdornment>
-                    }
-                    aria-describedby="search-helper-text"
-                    inputProps={{ 'aria-label': 'weight' }}
-                />
-            </Box>
+
+            {/* <TextField
+                id="standard-select-currency"
+                select
+                value={value}
+                onChange={(e) => setValue(e.target.value)}
+            >
+                {status.map((option) => (
+                    <MenuItem key={option.value} value={option.value}>
+                        {option.label}
+                    </MenuItem>
+                ))}
+            </TextField> */}
+            
+            <TextField
+                    id="outline-select-type" label="Tipo" variant="outlined"
+                    select
+                    fullWidth
+                >
+                        <MenuItem>
+                            Casa
+                        </MenuItem>
+                        <MenuItem>
+                            Apto
+                        </MenuItem>
+                        <MenuItem>
+                            Salão
+                        </MenuItem>
+            </TextField>
         </>
     );
 };
