@@ -11,8 +11,8 @@ const AuthRegister3 = Loadable(lazy(() => import('views/pages/authentication/aut
 // ==============================|| AUTHENTICATION ROUTING ||============================== //
 
 const AuthenticationRoutes = {
-    path: '/',
-    element: <MinimalLayout />,
+    path: '/free',
+    element: <AuthLogin3 />,
     children: [
         {
             path: '/pages/login/login3',
