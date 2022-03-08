@@ -31,11 +31,11 @@ const MainRoutes = {
             element: <SamplePage />
         },
         {
-            path: '/dashboard1',
+            path: '/',
             element: <Dashboard />
         },
         {
-            path: '/',
+            path: '/dashboard1',
             element: <DashboardDefault />
         },
         {
