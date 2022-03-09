@@ -27,7 +27,6 @@ const PopperStyle = styled(Popper, { shouldForwardProp })(({ theme }) => ({
 }));
 
 const OutlineInputStyle = styled(OutlinedInput, { shouldForwardProp })(({ theme }) => ({
-    width: 434,
     marginLeft: 16,
     paddingLeft: 16,
     paddingRight: 16,
@@ -162,34 +161,102 @@ const SearchSection = () => {
                 </PopupState>
             </Box>
 
-            {/* <TextField
-                id="standard-select-currency"
-                select
-                value={value}
-                onChange={(e) => setValue(e.target.value)}
-            >
-                {status.map((option) => (
-                    <MenuItem key={option.value} value={option.value}>
-                        {option.label}
-                    </MenuItem>
-                ))}
-            </TextField> */}
-            
-            <TextField
-                    id="outline-select-type" label="Tipo" variant="outlined"
-                    select
-                    fullWidth
-                >
-                        <MenuItem>
-                            Casa
-                        </MenuItem>
-                        <MenuItem>
-                            Apto
-                        </MenuItem>
-                        <MenuItem>
-                            Salão
-                        </MenuItem>
-            </TextField>
+            <Box sx={{ display: { xs: 'none', md: 'block' } }}>
+                <Grid container spacing={2}>
+                    <Grid item xs={3}>
+                        <OutlinedInput style={{ marginLeft:"20px" }}
+                            id="input-search-header"
+                            value={value}
+                            onChange={(e) => setValue(e.target.value)}
+                            placeholder="Search"
+                            startAdornment={
+                                <InputAdornment position="start">
+                                    <IconSearch stroke={1.5} size="1rem" color={theme.palette.grey[500]} />
+                                </InputAdornment>
+                            }
+                            endAdornment={
+                                <InputAdornment position="end">
+                                    <ButtonBase sx={{ borderRadius: '12px' }}>
+                                        <HeaderAvatarStyle variant="rounded">
+                                            <IconAdjustmentsHorizontal stroke={1.5} size="1.3rem" />
+                                        </HeaderAvatarStyle>
+                                    </ButtonBase>
+                                </InputAdornment>
+                            }
+                            aria-describedby="search-helper-text"
+                            inputProps={{ 'aria-label': 'weight' }}
+                        />
+                    </Grid>
+
+                    <Grid item xs={3}>
+                        <TextField
+                            id="outline-select-type" label="Tipo" variant="outlined"
+                            select
+                            fullWidth
+                        >
+                            <MenuItem>
+                                Casa
+                            </MenuItem>
+                            <MenuItem>
+                                Apto
+                            </MenuItem>
+                            <MenuItem>
+                                Salão
+                            </MenuItem>
+                        </TextField>
+                    </Grid>
+
+                    <Grid item xs={3}>
+                        <OutlinedInput
+                            id="input-maxprice-header"
+                            value={value}
+                            onChange={(e) => setValue(e.target.value)}
+                            placeholder="Preço Máximo"
+                            startAdornment={
+                                <InputAdornment position="start">
+                                    <IconSearch stroke={1.5} size="1rem" color={theme.palette.grey[500]} />
+                                </InputAdornment>
+                            }
+                            endAdornment={
+                                <InputAdornment position="end">
+                                    <ButtonBase sx={{ borderRadius: '12px' }}>
+                                        <HeaderAvatarStyle variant="rounded">
+                                            <IconAdjustmentsHorizontal stroke={1.5} size="1.3rem" />
+                                        </HeaderAvatarStyle>
+                                    </ButtonBase>
+                                </InputAdornment>
+                            }
+                            aria-describedby="search-maxprice-text"
+                            inputProps={{ 'aria-label': 'weight' }}
+                        />
+                    </Grid>
+
+                    <Grid item xs={3}>
+                        <OutlinedInput
+                            id="input-minprice-header"
+                            value={value}
+                            onChange={(e) => setValue(e.target.value)}
+                            placeholder="Preço Mínimo"
+                            startAdornment={
+                                <InputAdornment position="start">
+                                    <IconSearch stroke={1.5} size="1rem" color={theme.palette.grey[500]} />
+                                </InputAdornment>
+                            }
+                            endAdornment={
+                                <InputAdornment position="end">
+                                    <ButtonBase sx={{ borderRadius: '12px' }}>
+                                        <HeaderAvatarStyle variant="rounded">
+                                            <IconAdjustmentsHorizontal stroke={1.5} size="1.3rem" />
+                                        </HeaderAvatarStyle>
+                                    </ButtonBase>
+                                </InputAdornment>
+                            }
+                            aria-describedby="search-minprice-text"
+                            inputProps={{ 'aria-label': 'weight' }}
+                        />
+                    </Grid>
+                </Grid>
+            </Box>
         </>
     );
 };
