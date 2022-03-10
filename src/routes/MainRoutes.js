@@ -5,7 +5,7 @@ import MainLayout from 'layout/MainLayout';
 import Loadable from 'ui-component/Loadable';
 
 // dashboard routing
-const Dashboard = Loadable(lazy(() => import('views/pages/dashboard')));
+const Dashboard = Loadable(lazy(() => import('views/pages/dashboard/index.jsx')));
 
 // dashboard routing
 const DashboardDefault = Loadable(lazy(() => import('views/dashboard/Default')));
