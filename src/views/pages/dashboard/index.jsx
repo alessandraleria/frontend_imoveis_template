@@ -19,6 +19,7 @@ import {
 import PerfectScrollbar from 'react-perfect-scrollbar';
 import "react-perfect-scrollbar/dist/css/styles.css";
 import api from "../../../services/api";
+import axios from "axios";
 
 // ==============================|| SAMPLE PAGE ||============================== //
 
@@ -27,7 +28,7 @@ export default function SamplePage() {
     
     const [ marker, setMarkers ] = useState(null);
     const [map, setMap] = useState(null);
-    const [data, setData] = useState("");
+    const [data, setData] = useState(null);
     const [loading, setLoading] = useState(false);
     var infowindow;
 
@@ -41,7 +42,7 @@ export default function SamplePage() {
         await fetchData();
         const bounds = new window.google.maps.LatLngBounds();     
         
-        map.setZoom(15);
+        
         infowindow = new google.maps.InfoWindow();
         positions.forEach((item, index) => {
             var marker = addMarker(item, map);
@@ -50,6 +51,7 @@ export default function SamplePage() {
         });
         const center = bounds.getCenter();
         map.setCenter(center);
+        map.setZoom(15);
         map.fitBounds(bounds);
         map.addListener("click", function() {
             infowindow.close();
@@ -93,10 +95,9 @@ export default function SamplePage() {
     async function fetchCards(){
         try {
             const response = await api.get("/properties");
-    
+            console.log(response.data)
             if (response.data) {
-                setData
-                console.log(data)
+                setData(response.data)
             } else {
             alert(
                 "\nServidor indisponível!\nPor favor, tente novamente mais tarde"
@@ -105,88 +106,11 @@ export default function SamplePage() {
         } catch (err) {
             console.log("Erro: " + err);
             alert("Falha carregando dados de propriedades, tente novamente.");
-        } finally {
-            console.log(data)
         }
     }
     useEffect(() => {   
-        setLoading(true)
         fetchCards();
     }, [])
-
-    // useEffect(() => {
-    //     fetchCards();
-    //     // for(let i = 0; i < data.length; i++){
-    //     //     renderCards(data[i]);
-    //     // }
-        
-    // }, [])
-
-    async function renderCards(item){
-        return(
-            <Card sx={{display: 'flex'}}>
-                <CardMedia
-                    component="img"
-                    sx={{ width: 151 }}
-                    image="https://resizedimgs.zapimoveis.com.br/fit-in/800x360/vr.images.sp/a4d22a909b351a556c848405bc096803.jpg"
-                    alt="Live from space album cover"
-                />
-                <Grid item xs={12} sx={{display: 'flex', flexDirection: 'row'}}>
-                    <Grid item xs={8}>
-                        <CardContent>
-                            <Typography component="div" variant="h4" mb={1}>
-                                R${item.value}
-                            </Typography>
-                            <Divider />
-                            <Grid item sx={{display: 'flex', flexDirection: 'row'}}>
-                                <Typography variant="subtitle1" color="black" component="div" mt={1} mr={1}>
-                                    Tipo de Imóvel: 
-                                </Typography>
-                                <Typography variant="subtitle1" color="gray"  component="div" mt={1}>
-                                    Casa
-                                </Typography>
-                            </Grid>
-
-                            <Grid item sx={{display: 'flex', flexDirection: 'row'}}>
-                                <Typography variant="subtitle1" color="black" component="div" mt={1} mr={1}>
-                                    Tipo de Aluguel:
-                                </Typography>
-                                <Typography variant="subtitle1" color="gray"  component="div" mt={1}>
-                                    Temporada
-                                </Typography>
-                            </Grid>
-
-                            <Grid item sx={{display: 'flex', flexDirection: 'row'}}>
-                                <Typography variant="subtitle1" color="black" component="div" mt={1} mr={1}>
-                                    Alugado: 
-                                </Typography>
-                                <Typography variant="subtitle1" color="green"  component="div" mt={1}>
-                                    Alugado
-                                </Typography>
-                            </Grid>
-                        </CardContent>
-                    </Grid>
-                    
-                    <Grid item xs={4}>
-                        <CardContent>
-                            <Button
-                                disableElevation
-                                // disabled={isSubmitting}
-                                fullWidth
-                                size="large"
-                                type="submit"
-                                variant="contained"
-                                color="secondary"
-                            >
-                                Detalhes
-                            </Button>
-                        </CardContent>
-                    </Grid>
-                    
-                </Grid>
-            </Card> 
-        )
-    }
 
     async function fetchData(){
         try {
@@ -221,100 +145,91 @@ export default function SamplePage() {
     }
     if(loading){
         return (
-            <div>oi</div>
+            <div>Carregando...</div>
         )
     }
 
-    if(!loading){
+    
        return (
         <Grid item xs={12}>
             <PerfectScrollbar component='div'>
                 <Grid container spacing={gridSpacing} maxHeight="100vh">
-                    {/* <Grid item xs={7}>
+                    <Grid item xs={7}>
                         {isLoaded &&
                             <GoogleMap
                                 mapContainerStyle={{width: "100%", height: "87vh"}}
                                 onLoad={onLoad}
                             />
                         }       
-                    </Grid> */}
+                    </Grid>
 
                     
-                    <Grid item xs={5}>
+                    <Grid item spacing={2} xs={5}>
                         {
-                            data && data.forEach((item) => {
-                                
-                                <div>{item.id}</div>
-                                   
-                                
+                            data && data.map((item, index) => {
+                                return <Card sx={{display: 'flex', marginBottom: "5px"}}>
+                                <CardMedia
+                                    component="img"
+                                    sx={{ width: 151 }}
+                                    image={item.image}
+                                    alt="Live from space album cover"
+                                />
+                                <Grid item xs={12} sx={{display: 'flex', flexDirection: 'row'}}>
+                                    <Grid item xs={8}>
+                                        <CardContent>
+                                            <Typography component="div" variant="h4" mb={1}>
+                                                R${item.value}
+                                            </Typography>
+                                            <Divider />
+                                            <Grid item sx={{display: 'flex', flexDirection: 'row'}}>
+                                                <Typography variant="subtitle1" color="black" component="div" mt={1} mr={1}>
+                                                    Tipo de Imóvel: 
+                                                </Typography>
+                                                <Typography variant="subtitle1" color="gray"  component="div" mt={1}>
+                                                    {item.property_type}
+                                                </Typography>
+                                            </Grid>
+
+                                            <Grid item sx={{display: 'flex', flexDirection: 'row'}}>
+                                                <Typography variant="subtitle1" color="black" component="div" mt={1} mr={1}>
+                                                    Tipo de Aluguel:
+                                                </Typography>
+                                                <Typography variant="subtitle1" color="gray"  component="div" mt={1}>
+                                                    {item.rent_type}
+                                                </Typography>
+                                            </Grid>
+
+                                            <Grid item sx={{display: 'flex', flexDirection: 'row'}}>
+                                                <Typography variant="subtitle1" color="black" component="div" mt={1} mr={1}>
+                                                    Alugado: 
+                                                </Typography>
+                                                <Typography variant="subtitle1" color="green"  component="div" mt={1}>
+                                                    {item.rented ? "Alugado" : "Disponível"}
+                                                </Typography>
+                                            </Grid>
+                                        </CardContent>
+                                    </Grid>
                                     
-                                //     <Card sx={{display: 'flex'}}>
-                                //     <CardMedia
-                                //         component="img"
-                                //         sx={{ width: 151 }}
-                                //         image="https://resizedimgs.zapimoveis.com.br/fit-in/800x360/vr.images.sp/a4d22a909b351a556c848405bc096803.jpg"
-                                //         alt="Live from space album cover"
-                                //     />
-                                //     <Grid item xs={12} sx={{display: 'flex', flexDirection: 'row'}}>
-                                //         <Grid item xs={8}>
-                                //             <CardContent>
-                                //                 <Typography component="div" variant="h4" mb={1}>
-                                //                     R${item.value}
-                                //                 </Typography>
-                                //                 <Divider />
-                                //                 <Grid item sx={{display: 'flex', flexDirection: 'row'}}>
-                                //                     <Typography variant="subtitle1" color="black" component="div" mt={1} mr={1}>
-                                //                         Tipo de Imóvel: 
-                                //                     </Typography>
-                                //                     <Typography variant="subtitle1" color="gray"  component="div" mt={1}>
-                                //                         Casa
-                                //                     </Typography>
-                                //                 </Grid>
-
-                                //                 <Grid item sx={{display: 'flex', flexDirection: 'row'}}>
-                                //                     <Typography variant="subtitle1" color="black" component="div" mt={1} mr={1}>
-                                //                         Tipo de Aluguel:
-                                //                     </Typography>
-                                //                     <Typography variant="subtitle1" color="gray"  component="div" mt={1}>
-                                //                         Temporada
-                                //                     </Typography>
-                                //                 </Grid>
-
-                                //                 <Grid item sx={{display: 'flex', flexDirection: 'row'}}>
-                                //                     <Typography variant="subtitle1" color="black" component="div" mt={1} mr={1}>
-                                //                         Alugado: 
-                                //                     </Typography>
-                                //                     <Typography variant="subtitle1" color="green"  component="div" mt={1}>
-                                //                         Alugado
-                                //                     </Typography>
-                                //                 </Grid>
-                                //             </CardContent>
-                                //         </Grid>
-                                        
-                                //         <Grid item xs={4}>
-                                //             <CardContent>
-                                //                 <Button
-                                //                     disableElevation
-                                //                     // disabled={isSubmitting}
-                                //                     fullWidth
-                                //                     size="large"
-                                //                     type="submit"
-                                //                     variant="contained"
-                                //                     color="secondary"
-                                //                 >
-                                //                     Detalhes
-                                //                 </Button>
-                                //             </CardContent>
-                                //         </Grid>
-                                        
-                                //     </Grid>
-                                // </Card>  
-                                
-                                
-                            })
-                             
-                        }
-                        
+                                    <Grid item xs={4}>
+                                        <CardContent>
+                                            <Button
+                                                disableElevation
+                                                // disabled={isSubmitting}
+                                                fullWidth
+                                                size="large"
+                                                type="submit"
+                                                variant="contained"
+                                                color="secondary"
+                                            >
+                                                Detalhes
+                                            </Button>
+                                        </CardContent>
+                                    </Grid>
+                                    
+                                </Grid>
+                            </Card>  
+                            })      
+                        }         
                     </Grid>
                 </Grid>
             </PerfectScrollbar>
@@ -322,7 +237,6 @@ export default function SamplePage() {
         
         
     ); 
-    }
 
     
 }
