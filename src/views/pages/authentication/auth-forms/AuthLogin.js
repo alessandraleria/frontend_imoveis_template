@@ -1,5 +1,7 @@
 import { useState } from 'react';
 import { useSelector } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
+import useAuth from "../../../../hooks/useAuth";
 
 // material-ui
 import { useTheme } from '@mui/material/styles';
@@ -45,6 +47,7 @@ const FirebaseLogin = ({ ...others }) => {
     const matchDownSM = useMediaQuery(theme.breakpoints.down('md'));
     const customization = useSelector((state) => state.customization);
     const [checked, setChecked] = useState(true);
+    const navigate = useNavigate();
 
     const googleHandler = async () => {
         console.error('Login');
@@ -59,13 +62,26 @@ const FirebaseLogin = ({ ...others }) => {
         event.preventDefault();
     };
 
+    const { loginUser, error } = useAuth();
+
     const handleLogin = async googleData => {
-        console.log(googleData);
-        const res = await api.post("/auth/google", {
-          token: googleData.tokenId
-        })
-        console.log(res)
-    }
+        
+        await loginUser(googleData);
+        // try {
+        //     const {data} = await api.post("/auth/google", {
+        //         token: googleData.tokenId
+        //     }).then(async () => {
+        //         await setUserContext();
+        //     })
+        //     console.log(data);
+        //     window.localStorage.setItem("@user-token", data.token);
+        // } catch ( error ){
+        //     console.log("Error: ", error);
+        // } finally {
+        //     if(window.localStorage.getItem("@user-token"))
+        //     navigate('/dashboard')
+        // }       
+    };
 
     return (
         <>

@@ -1,5 +1,6 @@
 import React, { useEffect, useState, useCallback, useContext } from 'react';
 import { useTheme } from '@mui/material/styles';
+import { useLocation } from 'react-router';
 // material-ui
 import { Grid } from '@mui/material';
 // project imports
@@ -40,8 +41,9 @@ export default function SamplePage() {
     })
 
     const onLoad =  useCallback(async function callback(map) {
+        console.log(state);
         console.log("map: ", map)
-        await fetchData();
+        await fetchData(state, user.id);
         const bounds = new window.google.maps.LatLngBounds();     
         
         
@@ -94,10 +96,16 @@ export default function SamplePage() {
     }
 
     const positions = []
-    async function fetchCards(){
+    async function fetchCards(state, user_id){
         try {
-            const response = await api.get("/properties");
-            console.log(response.data)
+            const response = await api.post("/properties/filter", {
+                id: user_id,
+                search: state.search,
+                property_type: state.property_type,
+                max_value: state.max_value,
+                min_value: state.min_value
+            });
+
             if (response.data) {
                 setData(response.data)
             } else {
@@ -111,12 +119,19 @@ export default function SamplePage() {
         }
     }
     useEffect(() => {   
-        fetchCards();
+        fetchCards(state, user.id);
     }, [])
 
-    async function fetchData(){
+    async function fetchData(state, user_id){
         try {
-            const response = await api.get("/properties");
+            console.log(state);
+            const response = await api.post("/properties/filter", {
+                id: user_id,
+                search: state.search,
+                property_type: state.property_type,
+                max_value: state.max_value,
+                min_value: state.min_value
+            });
     
             if (response.data) {
                 for(let i = 0; i < response.data.length; i++){
@@ -241,11 +256,7 @@ export default function SamplePage() {
                     </Grid>
                 </Grid>
             </PerfectScrollbar>
-        </Grid>
-        
-        
-    ); 
-
-    
+        </Grid>  
+    );   
 }
 

@@ -6,7 +6,7 @@ import Loadable from 'ui-component/Loadable';
 
 // dashboard routing
 const Dashboard = Loadable(lazy(() => import('views/pages/dashboard/index.jsx')));
-
+const Filter = Loadable(lazy(() => import('views/pages/dashboard/byfilter.jsx')));
 // dashboard routing
 const DashboardDefault = Loadable(lazy(() => import('views/dashboard/Default')));
 
@@ -31,8 +31,12 @@ const MainRoutes = {
             element: <SamplePage />
         },
         {
-            path: '/',
+            path: '/dashboard',
             element: <Dashboard />
+        },
+        {
+            path: '/filter',
+            element: <Filter />
         },
         {
             path: '/dashboard1',

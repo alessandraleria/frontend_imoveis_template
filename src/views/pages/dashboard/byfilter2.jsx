@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types';
 import { useState, useEffect } from 'react';
-import { useNavigate, useLocation } from 'react-router';
+import { useNavigate } from 'react-router';
 
 // material-ui
 import { useTheme, styled } from '@mui/material/styles';
@@ -119,7 +119,6 @@ MobileSearch.propTypes = {
 
 const SearchSection = () => {
     const navigate = useNavigate();
-    const location = useLocation();
     const theme = useTheme();
     const [value, setValue] = useState('');
     const [search, setSearch] = useState('');
@@ -128,12 +127,8 @@ const SearchSection = () => {
     const [minValue, setMinValue] = useState("");
 
     const handleSearch = (search, propertyType, minValue, maxValue) => {
-        if(location.pathname == "/dashboard"){
-            navigate('/dashboard/filter', { state: { search: search, propertyType: propertyType, minValue: minValue, maxValue: maxValue } });
-        } else {
-            navigate('/dashboard', { state: { search: search, propertyType: propertyType, minValue: minValue, maxValue: maxValue } });
-        }
-        
+        console.log("oi");
+        navigate('/dashboard/filter/', { state: { search: search, propertyType: propertyType, minValue: minValue, maxValue: maxValue } });
     }
 
     return (
