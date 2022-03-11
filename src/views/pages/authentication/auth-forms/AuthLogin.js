@@ -62,25 +62,11 @@ const FirebaseLogin = ({ ...others }) => {
         event.preventDefault();
     };
 
-    const { loginUser, error } = useAuth();
+    const { loginUser, loginDefault, error } = useAuth();
 
     const handleLogin = async googleData => {
         
-        await loginUser(googleData);
-        // try {
-        //     const {data} = await api.post("/auth/google", {
-        //         token: googleData.tokenId
-        //     }).then(async () => {
-        //         await setUserContext();
-        //     })
-        //     console.log(data);
-        //     window.localStorage.setItem("@user-token", data.token);
-        // } catch ( error ){
-        //     console.log("Error: ", error);
-        // } finally {
-        //     if(window.localStorage.getItem("@user-token"))
-        //     navigate('/dashboard')
-        // }       
+        await loginUser(googleData);  
     };
 
     return (
@@ -133,8 +119,8 @@ const FirebaseLogin = ({ ...others }) => {
 
             <Formik
                 initialValues={{
-                    email: 'info@codedthemes.com',
-                    password: '123456',
+                    email: '',
+                    password: '',
                     submit: null
                 }}
                 validationSchema={Yup.object().shape({
@@ -144,7 +130,7 @@ const FirebaseLogin = ({ ...others }) => {
                 onSubmit={async (values, { setErrors, setStatus, setSubmitting }) => {
                     try {
                         if (scriptedRef.current) {
-                            setStatus({ success: true });
+                            await loginDefault(values);
                             setSubmitting(false);
                         }
                     } catch (err) {
@@ -168,7 +154,7 @@ const FirebaseLogin = ({ ...others }) => {
                                 name="email"
                                 onBlur={handleBlur}
                                 onChange={handleChange}
-                                label="Email Address / Username"
+                                label="Email Address"
                                 inputProps={{}}
                             />
                             {touched.email && errors.email && (

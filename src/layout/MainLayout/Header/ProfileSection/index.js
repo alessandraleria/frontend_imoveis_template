@@ -1,4 +1,4 @@
-import { useState, useRef, useEffect } from 'react';
+import { useState, useRef, useEffect, useContext } from 'react';
 
 import { useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
@@ -38,6 +38,8 @@ import User1 from 'assets/images/users/user-round.svg';
 
 // assets
 import { IconLogout, IconSearch, IconSettings, IconUser } from '@tabler/icons';
+import { UserContext } from 'hooks/UserContext';
+
 
 // ==============================|| PROFILE MENU ||============================== //
 
@@ -51,12 +53,13 @@ const ProfileSection = () => {
     const [notification, setNotification] = useState(false);
     const [selectedIndex, setSelectedIndex] = useState(-1);
     const [open, setOpen] = useState(false);
+    const { user } = useContext(UserContext);
     /**
      * anchorRef is used on different componets and specifying one type leads to other components throwing an error
      * */
     const anchorRef = useRef(null);
     const handleLogout = async () => {
-        console.log('Logout');
+        navigate("/login");
     };
 
     const handleClose = (event) => {
@@ -159,7 +162,7 @@ const ProfileSection = () => {
                                             <Stack direction="row" spacing={0.5} alignItems="center">
                                                 <Typography variant="h4">Olá,</Typography>
                                                 <Typography component="span" variant="h4" sx={{ fontWeight: 400 }}>
-                                                    Pessoinha Linda
+                                                    {user.name}
                                                 </Typography>
                                             </Stack>
                                             {/* <Typography variant="subtitle2">Project Admin</Typography> */}
@@ -248,7 +251,8 @@ const ProfileSection = () => {
                                                 <ListItemButton
                                                     sx={{ borderRadius: `${customization.borderRadius}px` }}
                                                     selected={selectedIndex === 0}
-                                                    onClick={(event) => handleListItemClick(event, 0, '/user/account-profile/profile1')}
+                                                    //onClick={(event) => handleListItemClick(event, 0, '/user/account-profile/profile1')}
+                                                    onClick={(e) => console.log(e)}
                                                 >
                                                     <ListItemIcon>
                                                         <IconSettings stroke={1.5} size="1.3rem" />
@@ -258,7 +262,8 @@ const ProfileSection = () => {
                                                 <ListItemButton
                                                     sx={{ borderRadius: `${customization.borderRadius}px` }}
                                                     selected={selectedIndex === 1}
-                                                    onClick={(event) => handleListItemClick(event, 1, '/user/social-profile/posts')}
+                                                    // onClick={(event) => handleListItemClick(event, 1, '/user/social-profile/posts')}
+                                                    onClick={(e) => console.log(e)}
                                                 >
                                                     <ListItemIcon>
                                                         <IconUser stroke={1.5} size="1.3rem" />

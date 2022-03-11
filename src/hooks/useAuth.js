@@ -50,8 +50,30 @@ export default function useAuth() {
             }
     }
 
+    const loginDefault = async (data) => {
+        const {email, password} = data;
+
+        try {
+            const response = await api.post("/auth/login", {
+                email: email,
+                password: password
+            });
+
+            console.log(response.data.token);
+
+            if(response.data.token){
+                api.defaults.headers.common['Authorization'] = response.data.token
+            }
+            await setUserContext();
+            
+        } catch (err) {
+            console.log(err);
+        }
+}
+
     return {
         registerUser,
-        loginUser
+        loginUser,
+        loginDefault
     }
 }

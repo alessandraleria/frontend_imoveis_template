@@ -98,20 +98,37 @@ export default function SamplePage() {
     const positions = []
     async function fetchCards(state, user_id){
         try {
-            const response = await api.post("/properties/filter", {
-                id: user_id,
-                search: state.search,
-                property_type: state.property_type,
-                max_value: state.max_value,
-                min_value: state.min_value
-            });
-
-            if (response.data) {
-                setData(response.data)
+            if(state) {
+                const response = await api.post("/properties/filter", {
+                    id: user_id,
+                    search: state.search,
+                    property_type: state.propertyType,
+                    max_value: state.maxValue,
+                    min_value: state.minValue
+                });
+    
+                if (response.data) {
+                    setData(response.data)
+                } else {
+                alert(
+                    "\nServidor indisponível!\nPor favor, tente novamente mais tarde"
+                );
+                }
             } else {
-            alert(
-                "\nServidor indisponível!\nPor favor, tente novamente mais tarde"
-            );
+                const response = await api.post("/properties/filter", {
+                    id: user_id,
+                    search: "",
+                    property_type: "",
+                    max_value: "",
+                    min_value: ""
+                });
+                if (response.data) {
+                    setData(response.data)
+                } else {
+                alert(
+                    "\nServidor indisponível!\nPor favor, tente novamente mais tarde"
+                );
+                }
             }
         } catch (err) {
             console.log("Erro: " + err);
@@ -124,36 +141,37 @@ export default function SamplePage() {
 
     async function fetchData(state, user_id){
         try {
-            console.log(state);
-            const response = await api.post("/properties/filter", {
-                id: user_id,
-                search: state.search,
-                property_type: state.property_type,
-                max_value: state.max_value,
-                min_value: state.min_value
-            });
-    
-            if (response.data) {
-                for(let i = 0; i < response.data.length; i++){
-                    positions.push({
-                        title: response.data[i].description,
-                        image: response.data[i].image,
-                        value: response.data[i].value,
-                        rented: response.data[i].rented,
-                        address: response.data[i].address + ', ' + response.data[i].number,
-                        zip_code: response.data[i].zip_code,
-                        city_uf_country: response.data[i].city + " - " + response.data[i].state + ", " + response.data[i].country,
-                        rent_value: response.data[i].rent_value,
-                        location: {
-                            lat: parseFloat(response.data[i].latitude), 
-                            lng: parseFloat(response.data[i].longitude)
-                        } 
-                    })
+            if(state){
+                const response = await api.post("/properties/filter", {
+                    id: user_id,
+                    search: state.search,
+                    property_type: state.propertyType,
+                    max_value: state.maxValue,
+                    min_value: state.minValue
+                });
+        
+                if (response.data) {
+                    for(let i = 0; i < response.data.length; i++){
+                        positions.push({
+                            title: response.data[i].description,
+                            image: response.data[i].image,
+                            value: response.data[i].value,
+                            rented: response.data[i].rented,
+                            address: response.data[i].address + ', ' + response.data[i].number,
+                            zip_code: response.data[i].zip_code,
+                            city_uf_country: response.data[i].city + " - " + response.data[i].state + ", " + response.data[i].country,
+                            rent_value: response.data[i].rent_value,
+                            location: {
+                                lat: parseFloat(response.data[i].latitude), 
+                                lng: parseFloat(response.data[i].longitude)
+                            } 
+                        })
+                    }
+                } else {
+                alert(
+                    "\nServidor indisponível!\nPor favor, tente novamente mais tarde"
+                );
                 }
-            } else {
-            alert(
-                "\nServidor indisponível!\nPor favor, tente novamente mais tarde"
-            );
             }
         } catch (err) {
             console.log("Erro: " + err);
@@ -209,7 +227,11 @@ export default function SamplePage() {
                                                     Tipo de Imóvel: 
                                                 </Typography>
                                                 <Typography variant="subtitle1" color="gray"  component="div" mt={1}>
-                                                    {item.property_type}
+                                                    {item.property_type == 1 && "Casa"}    
+                                                    {item.property_type == 2 && "Apartamento"} 
+                                                    {item.property_type == 3 && "Comercial"} 
+                                                    {item.property_type == 4 && "Chácara"} 
+                                                    {item.property_type == 5 && "Sobrado"}
                                                 </Typography>
                                             </Grid>
 
@@ -218,7 +240,7 @@ export default function SamplePage() {
                                                     Tipo de Aluguel:
                                                 </Typography>
                                                 <Typography variant="subtitle1" color="gray"  component="div" mt={1}>
-                                                    {item.rent_type}
+                                                    {item.rent_type} - {item.rent_type == 1 ? "Temporada" : "Aluguel"}
                                                 </Typography>
                                             </Grid>
 

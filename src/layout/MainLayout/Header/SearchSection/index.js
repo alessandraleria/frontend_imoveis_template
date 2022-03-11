@@ -17,6 +17,8 @@ import { IconAdjustmentsHorizontal, IconSearch, IconX } from '@tabler/icons';
 import { shouldForwardProp } from '@mui/system';
 import AnimateButton from 'ui-component/extended/AnimateButton';
 
+import api from 'services/api';
+
 
 // styles
 const PopperStyle = styled(Popper, { shouldForwardProp })(({ theme }) => ({
@@ -126,6 +128,7 @@ const SearchSection = () => {
     const [propertyType, setPropertyType] = useState("");
     const [maxValue, setMaxValue] = useState("");
     const [minValue, setMinValue] = useState("");
+    const [types, setTypes] = useState([]);
 
     const handleSearch = (search, propertyType, minValue, maxValue) => {
         if(location.pathname == "/dashboard"){
@@ -135,6 +138,19 @@ const SearchSection = () => {
         }
         
     }
+
+    useEffect(() => {
+        async function fetchData(){
+            try {
+                const response = await api.get("/property-type/getAll");
+                setTypes(response.data);
+            } catch (err) { 
+                console.log("Error: ", err);
+            }
+        }
+        fetchData();
+        
+    }, [])
 
     return (
         <>
@@ -209,18 +225,17 @@ const SearchSection = () => {
                     <Grid item xs={2}>
                         <TextField
                             id="outline-select-type" label="Tipo" variant="outlined"
+                            value={propertyType}
+                            onChange={(e) => setPropertyType(e.target.value)}
                             select
                             fullWidth
                         >
-                            <MenuItem>
-                                Casa
-                            </MenuItem>
-                            <MenuItem>
-                                Apto
-                            </MenuItem>
-                            <MenuItem>
-                                Salão
-                            </MenuItem>
+                            <MenuItem value="">Selecione</MenuItem>
+                            {types && types.map((item, index) => {
+                                return <MenuItem key={index} value={item.id}>
+                                    {item.id} - {item.description}
+                                </MenuItem>
+                            })}
                         </TextField>
                     </Grid>
 
