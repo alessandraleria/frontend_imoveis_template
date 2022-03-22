@@ -9,7 +9,7 @@ export default function useAuth() {
     const {user, setUser}  = useContext(UserContext);
     //set user in context and push them home
     const setUserContext = async () => {
-        return await api.get('/user').then(res => {
+        return await api.get('/auth/user').then(res => {
             setUser(res.data.user);
             console.log(res.data.user);
             navigate('/dashboard');

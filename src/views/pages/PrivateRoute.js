@@ -7,8 +7,13 @@ export default function PrivateRoute(props) {
    const { component: Component, ...rest } = props;
    if(isLoading) {
       console.log("Carregando")
+      console.log("User Context: ", UserContext);
+      console.log("User: ", user);
    }
    if(user){
+      console.log("Carregando")
+      console.log("User Context: ", UserContext);
+      console.log("User: ", user);
       return ( <Route {...rest} render={(props) => 
                 (<Component {...props}/>)
             }

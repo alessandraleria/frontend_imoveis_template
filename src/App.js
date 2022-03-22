@@ -25,6 +25,8 @@ const Dashboard = Loadable(lazy(() => import('views/pages/dashboard/index.jsx'))
 const DashboardDefault = Loadable(lazy(() => import('views/dashboard/Default')));
 const Filter = Loadable(lazy(() => import('views/pages/dashboard/byfilter.jsx')));
 const Filter2 = Loadable(lazy(() => import('views/pages/dashboard/byfilter2.jsx')));
+const Details = Loadable(lazy(() => import('views/pages/details/index.jsx')));
+
 
 // utilities routing
 const UtilsTypography = Loadable(lazy(() => import('views/utilities/Typography')));
@@ -64,6 +66,7 @@ const App = () => {
                                     <PrivateRoute path="/dashboard" element={<Dashboard/>} />
                                     <PrivateRoute path="/dashboard/filter" element={<Filter/>} />
                                     <PrivateRoute path="/dashboard/filter1" element={<Filter2/>} />
+                                    <PrivateRoute path="/details" element={<Details/>} />
                                 </MainLayout>
                             </Routes>
                         </UserContext.Provider>

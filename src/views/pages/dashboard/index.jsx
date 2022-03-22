@@ -1,6 +1,8 @@
 import React, { useEffect, useState, useCallback, useContext } from 'react';
 import { useTheme } from '@mui/material/styles';
 import { useLocation } from 'react-router';
+import { useNavigate } from 'react-router-dom';
+
 // material-ui
 import { Grid } from '@mui/material';
 // project imports
@@ -33,6 +35,7 @@ export default function SamplePage() {
     const [map, setMap] = useState(null);
     const [data, setData] = useState(null);
     const [loading, setLoading] = useState(false);
+    const navigate = useNavigate();
     var infowindow;
 
     const { isLoaded } = useJsApiLoader({
@@ -300,6 +303,7 @@ export default function SamplePage() {
                                                 type="submit"
                                                 variant="contained"
                                                 color="secondary"
+                                                onClick={() => navigate("/details")}
                                             >
                                                 Detalhes
                                             </Button>
