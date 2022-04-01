@@ -26,8 +26,8 @@ const DashboardDefault = Loadable(lazy(() => import('views/dashboard/Default')))
 const Filter = Loadable(lazy(() => import('views/pages/dashboard/byfilter.jsx')));
 const Filter2 = Loadable(lazy(() => import('views/pages/dashboard/byfilter2.jsx')));
 const Details = Loadable(lazy(() => import('views/pages/details/index.jsx')));
-
-
+const Chat = Loadable(lazy(() => import('views/pages/Chat/Chat')));
+const Join = Loadable(lazy(() => import('views/pages/Join/Join')));
 // utilities routing
 const UtilsTypography = Loadable(lazy(() => import('views/utilities/Typography')));
 const UtilsColor = Loadable(lazy(() => import('views/utilities/Color')));
@@ -67,6 +67,8 @@ const App = () => {
                                     <PrivateRoute path="/dashboard/filter" element={<Filter/>} />
                                     <PrivateRoute path="/dashboard/filter1" element={<Filter2/>} />
                                     <PrivateRoute path="/details" element={<Details/>} />
+                                    <PrivateRoute path="/chat" element={<Chat/>} />
+                                    <PrivateRoute path="/join" element={<Join/>} />
                                 </MainLayout>
                             </Routes>
                         </UserContext.Provider>

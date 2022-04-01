@@ -65,7 +65,7 @@ const FirebaseLogin = ({ ...others }) => {
     const { loginUser, loginDefault, error } = useAuth();
 
     const handleLogin = async googleData => {
-        
+        console.log("Google Data: ", googleData);
         await loginUser(googleData);  
     };
 
